@@ -1,3 +1,4 @@
+require 'rubyplots/scatterplot'
 
 class RubyPlots
 

@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary = ""
   s.description = ""
   s.author = ["Matthew Pate"]
-  s.files = ["lib/rubyplots.rb"]
+  s.files = ["lib/rubyplots.rb", "lib/rubyplots/scatterplot.rb"]
   s.homepage = ""
   s.license = "MIT"
 end
