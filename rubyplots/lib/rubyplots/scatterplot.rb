@@ -3,6 +3,7 @@ class ScatterPlot
 
   def initialize(dataFile, latexFile)
     assertExists latexFile
+    assertExists dataFile
     writeScatterPlot(dataFile, latexFile)
   end
 
@@ -11,16 +12,16 @@ class ScatterPlot
   def writeScatterPlot(dataFile, latexFile)
     File.open(latexFile, "a") do |file|
       #file << "\tikzsetnextfilename{#{File.basename(dataFile, 
-      file << "\begin{tikzpicture}"
-	    file << "\begin{axis}[]"
-	    file << "\addplot table [only marks, x=x, y=y] {#{datafile}};"
-	    file << "\end{axis}"
-      file << "\end{tikzpicture}"
+      file << '\\begin{tikzpicture}' + "\n"
+	    file << '\\begin{axis}[]' + "\n"
+	    file << '\\addplot table [only marks, x=x, y=y] ' + "{#{dataFile}};\n"
+	    file << '\\end{axis}' + "\n"
+      file << '\\end{tikzpicture}' + "\n"
     end
   end
 
   def assertExists(file)
-    unless File.exists? file raise "Latex file '#{file}' not found." end
+    unless File.exists? file then raise "File '#{file}' not found." end
   end
 
 end
