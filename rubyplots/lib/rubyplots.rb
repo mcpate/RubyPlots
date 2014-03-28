@@ -1,40 +1,42 @@
 require 'rubyplots/scatterplot'
 
+
+require 'orchestrator'
+
+
 class RubyPlots
 
-  @dataDir = nil
+  @orchestrator = nil
 
-  def initialize(dataDir = nil)
-    dataDir.nil? ? @dataDir = makeDir(".") : @dataDir = makeDir(dataDir)  
+  def initialize
   end
 
-  def generate()
-    Dir.foreach(@dataDir) do |file|
-      checkAndGenerate(file)
+  # data can be a file or directory
+  def generatePlotsFor(data)
+    @orchestrator = Orchestrator.new
+
+    dataPath = File.expand_path(data)
+
+    if dataPath.file?
+      checkTypeAndGenerateFor dataPath
+    else
+      Dir.foreach(dataPath) do |file|
+        checkTypeAndGenerateFor file
+      end
     end
+    @orchestrator.generatePlots
   end
+
 
   private
 
-  def checkAndGenerate(file)
+  def checkTypeAndGenerateFor(file)
     if isRightType?(file)
-      generatePdf(file)
+      @orchestrator.addLatexFor(file)
     end
   end
 
-  def generatePdf(file)
-
-  end
-
-  def getExtension(file)
-    # return the extension
-  end
 
   def isRightType?(file)
-    extension = getExtension(file)
-    return extension == "scatter"
-  end
-
-  def makeDir(str)
-    dir = Dir.new(str)
+    return File.extension(file) == "scatterplot"
   end

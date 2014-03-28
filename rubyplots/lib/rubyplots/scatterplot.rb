@@ -17,9 +17,10 @@ class ScatterPlot
   def writeScatterPlot(dataFile, latexFile)
     CSV.open(dataFile, "r", {:col_sep => "\t"}) do |data|
       colNames = data.readline
+      validateColumnNames(colNames[0], colNames[1])
 
       File.open(latexFile, "a") do |file|
-        file << '\\tikzsetnextfilename' + "{#{File.basename(dataFile, ".scatterplot")}}" 
+        file << '\\tikzsetnextfilename' + "{rubyplots-#{File.basename(dataFile, ".scatterplot")}}\n" 
         file << '\\begin{tikzpicture}' + "\n"
 	      file << '\\begin{axis}[]' + "\n"
 	      file << '\\addplot table [only marks, ' + "x=#{colNames[0]}, y=#{colNames[1]}] {#{dataFile}};\n"
@@ -31,6 +32,12 @@ class ScatterPlot
 
   def assertExists(file)
     unless File.exists? file then raise "File '#{file}' not found." end
+  end
+
+  def validateColumnNames(x, y)
+    if ( (x.split.count > 1 and (x[0] != "{" or x[-1] != "}")) or (y.split.count > 1 and (y[0] != "{" or y[1] != "}")) )
+      raise "Columns with multiple words dectected in data file and no enclosing brackets found. One of: '#{x}' or '#{y}'"
+    end
   end
 
 end
