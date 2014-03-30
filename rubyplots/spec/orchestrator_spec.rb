@@ -1,8 +1,21 @@
 
 require_relative '../lib/rubyplots/orchestrator'
+require 'csv'
 
 
 describe "Orchestrator" do
+
+  # Create a 'data file' for testing purposes.
+  before(:all) do
+    CSV.open("./spec/dataFileTest.scatterplot", "w+", {:col_sep => "\t"}) do |file|
+      file << ["x", "y"]
+      file << [10, 20]
+      file << [20, 40]
+      file << [30, 80]
+      file << [40, 160]
+      file << [50, 320]
+    end
+  end
 
   $specTestFile = Dir.getwd + "/spec/dataFileTest.scatterplot"
   $specTexFile = Dir.getwd + "/spec/dataFileTest.tex"
@@ -28,6 +41,12 @@ describe "Orchestrator" do
     o = Orchestrator.new
     o.addLatexFor $specTestFile
     o.generatePlots
+  end
+
+
+  # Delete the data file created for testing.
+  after(:all) do
+    File.delete("./spec/dataFileTest.scatterplot")
   end
 
 end

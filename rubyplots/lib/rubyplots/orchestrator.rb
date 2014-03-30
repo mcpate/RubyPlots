@@ -1,13 +1,17 @@
 
 require 'SecureRandom'
 require_relative './scatterplot'
+
 require 'pry'
 
+
 class Orchestrator
+
 
   @latexPath = nil
   @workingDirectory = nil
   @extensionsToCleanup = nil
+
 
   def initialize
     validateLatexPackages
@@ -42,15 +46,17 @@ class Orchestrator
     system "pdflatex #{@latex} > /dev/null"
   end
 
+
   def cleanupCruftFrom(latex, workingDir)
     @extensionsToCleanup.each do |ext|
       Dir.foreach(workingDir) do |file|
         if File.extname(file) == ext
-          File.delete(workingDir + file)
+          File.delete(workingDir + "/" + file)
         end
       end
     end
   end
+
 
   # Finds the directory to work in and enables system calls
   def setWorkingDirectoryTo(fileOrDir)
@@ -61,10 +67,12 @@ class Orchestrator
     end
   end
 
+
   # A requirement of generating individual PDF's
   def enableLatexSystemCallsFor(latex)
     system "cd #{File.dirname(latex)}; pdflatex -shell-escape #{File.basename(latex, ".tex")}"
   end
+
 
   # Validates that latex, tikz, and pgfplots are installed
   def validateLatexPackages
@@ -85,6 +93,7 @@ class Orchestrator
     return nil
   end
 
+
   def writeOpeningTo(file)
     File.open(file, "a") do |f|
       f << '\\documentclass{article}' + "\n"
@@ -96,6 +105,7 @@ class Orchestrator
     end
   end
 
+
   def writeClosingTo(file)
     File.open(file, "a") do |f|
       f << '\\end{document}'
@@ -103,5 +113,4 @@ class Orchestrator
   end
 
 
-  
 end
