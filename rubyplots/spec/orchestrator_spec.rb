@@ -28,7 +28,7 @@ describe "Orchestrator" do
   it "should create a latex file" do
     o = Orchestrator.new($tempDir)
     o.addLatexFor $orchestratorDataFile
-    expect( !Dir.glob($tempDir + "/*.tex").empty? ).to be_true
+    expect( Dir.glob($tempDir + "/*.tex").empty? ).to be_false
   end
 
   it "should create all latex related files in the temp directory" do
@@ -42,6 +42,11 @@ describe "Orchestrator" do
     o.addLatexFor $orchestratorDataFile
     o.generatePlots
     o.savePlotsAndCleanup $tempDir
+    
+    expect( Dir.exists? $tempDir ).to be_false
+    plot = Dir.glob(File.split($tempDir)[0] + "/*.pdf")
+    expect( plot.empty? ).to be_false
+    FileUtils.rm plot[0]
   end
 
   # Delete the data file created for testing.

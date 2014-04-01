@@ -25,7 +25,7 @@ class Orchestrator
 
   def savePlotsAndCleanup(latexDir)
     parentDir = File.split(latexDir)[0]
-    plotsToKeep = Dir.glob(latexDir + "/rubyplots-*")
+    plotsToKeep = Dir.glob(latexDir + "/rubyplots-*.pdf")
     plotsToKeep.each do |plot|
       FileUtils.move(plot, parentDir, {:force => true})  
     end
