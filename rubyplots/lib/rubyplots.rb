@@ -11,8 +11,8 @@ class RubyPlots
   # data can be a file or directory
   def generatePlotsFor(data)
     dataPath = File.expand_path(data)
-    tempDir = createTempDirectoryIn dataPath
-    @orchestrator = Orchestrator.new(tempDir)
+    tempLatexDir = createTempDirectoryIn dataPath
+    @orchestrator = Orchestrator.new(tempLatexDir)
 
     if dataPath.file?
       checkTypeAndGenerateForFile dataPath
@@ -21,7 +21,7 @@ class RubyPlots
     end
 
     @orchestrator.generatePlots
-    #cleanup
+    @orchestrator.savePlotsAndCleanup tempLatexDir
   end
 
 
@@ -44,7 +44,6 @@ class RubyPlots
       checkTypeAndGenerateFor file
     end
   end
-
 
   def isRightType?(file)
     return File.extension(file) == "scatterplot"

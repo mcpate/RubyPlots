@@ -1,61 +1,54 @@
-require 'SecureRandom'
 require_relative './scatterplot'
-require 'pry'
+require 'fileutils'
 
 
 class Orchestrator
 
   @latexPath = nil
-  @workingDirectory = nil
-  @extensionsToCleanup = nil
+  @tempLatexDirectory = nil
 
-
-  def initialize(workingDirectory)
+  def initialize(tempLatexDirectory)
     validateLatexPackages
-    @workingDirectory = workingDirectory
-    @latexFile = @workingDirectory + "/" + "RubyPlotsLatexFile.tex"
+    @tempLatexDirectory = tempLatexDirectory
+    @latexFile = @tempLatexDirectory + "/" + "RubyPlotsLatexFile.tex"
     writeOpeningTo @latexFile
-    @extensionsToCleanup = [".aux", ".log", ".syntex.gz", ".tex", ".auxlock", ".dep", ".dpth"]
   end
 
-
   def addLatexFor(dataFile)
-    if not File.exists? dataFile
-      raise "File '#{dataFile}' not found."
-    end
     ScatterPlot.new( dataFile, @latexFile )
   end
 
-
   def generatePlots
     writeClosingTo @latexFile
-    enableLatexSystemCallsFor @latexFile
     compile @latexFile
+  end
+
+  def savePlotsAndCleanup(latexDir)
+    parentDir = File.split(latexDir)[0]
+    plotsToKeep = Dir.glob(latexDir + "/rubyplots-*")
+    plotsToKeep.each do |plot|
+      FileUtils.move(plot, parentDir, {:force => true})  
+    end
+    # Todo: Review options for this remove - this is unsecure right now.
+    FileUtils.rm_rf @tempLatexDirectory
   end
 
 
   private
 
-  def compile(file)
-    system "pdflatex #{@latex} > /dev/null"
-  end
+  def compile(pathToLatex)
+    latexDir = File.split(pathToLatex)[0]
+    file = File.split(pathToLatex)[1]
 
-
-  def cleanupCruftFrom(latex, workingDir)
-    @extensionsToCleanup.each do |ext|
-      Dir.foreach(workingDir) do |file|
-        if File.extname(file) == ext
-          File.delete(workingDir + "/" + file)
-        end
-      end
-    end
+    FileUtils.cd latexDir 
+    enableLatexSystemCallsFor file
+    system "pdflatex #{file} > /dev/null"
   end
 
   # A requirement of generating individual PDF's
   def enableLatexSystemCallsFor(latex)
-    system "cd #{File.dirname(latex)}; pdflatex -shell-escape #{File.basename(latex, ".tex")}"
+    system "pdflatex -shell-escape #{File.basename(latex, ".tex")}"
   end
-
 
   # Validates that latex, tikz, and pgfplots are installed
   def validateLatexPackages
@@ -63,7 +56,6 @@ class Orchestrator
       raise "Missing required latex packages."
     end
   end
-
 
   def which(cmd)
     exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
@@ -76,7 +68,6 @@ class Orchestrator
     return nil
   end
 
-
   def writeOpeningTo(file)
     File.open(file, "a") do |f|
       f << '\\documentclass{article}' + "\n"
@@ -88,12 +79,10 @@ class Orchestrator
     end
   end
 
-
   def writeClosingTo(file)
     File.open(file, "a") do |f|
       f << '\\end{document}'
     end
   end
-
 
 end
