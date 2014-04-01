@@ -1,4 +1,10 @@
-require 'pry'
+#-------------------------------------------------
+# Copyright (c) 2014 Matthew Pate
+# This program is licensed under the MIT License
+# Please see the file 'copying.txt' in the source
+# distribution of this software for license terms.
+# ------------------------------------------------
+
 require_relative '../lib/rubyplots/orchestrator'
 require 'csv'
 require 'fileutils'
@@ -46,7 +52,7 @@ describe "Orchestrator" do
     expect( Dir.exists? $tempDir ).to be_false
     plot = Dir.glob(File.split($tempDir)[0] + "/*.pdf")
     expect( plot.empty? ).to be_false
-    FileUtils.rm plot[0]
+    #FileUtils.rm plot[0]
   end
 
   # Delete the data file created for testing.

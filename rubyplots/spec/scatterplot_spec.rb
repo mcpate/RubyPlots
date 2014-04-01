@@ -1,6 +1,12 @@
+#-------------------------------------------------
+# Copyright (c) 2014 Matthew Pate
+# This program is licensed under the MIT License
+# Please see the file 'copying.txt' in the source
+# distribution of this software for license terms.
+# ------------------------------------------------
+
 require_relative '../lib/rubyplots/scatterplot'
 require 'csv'
-require 'pry'
 
 describe "ScatterPlot" do
  

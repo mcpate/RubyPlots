@@ -1,3 +1,10 @@
+#-------------------------------------------------
+# Copyright (c) 2014 Matthew Pate
+# This program is licensed under the MIT License
+# Please see the file 'copying.txt' in the source
+# distribution of this software for license terms.
+# ------------------------------------------------
+
 require 'csv'
 
 class ScatterPlot
@@ -19,9 +26,10 @@ class ScatterPlot
       validateColumnNames(colNames[0], colNames[1])
 
       File.open(latexFile, "a") do |file|
-        file << '\\tikzsetnextfilename' + "{rubyplots-#{File.basename(dataFile, ".scatterplot")}}\n" 
+        fileBasename = File.basename(dataFile, ".scatterplot")
+        file << '\\tikzsetnextfilename' + "{rubyplots-#{fileBasename}}\n" 
         file << '\\begin{tikzpicture}' + "\n"
-	      file << '\\begin{axis}[]' + "\n"
+	      file << '\\begin{axis}' + "[title=#{fileBasename}, xlabel=#{colNames[0]}, ylabel=#{colNames[1]}]\n"
 	      file << '\\addplot table [only marks, ' + "x=#{colNames[0]}, y=#{colNames[1]}] {#{dataFile}};\n"
 	      file << '\\end{axis}' + "\n"
         file << '\\end{tikzpicture}' + "\n"
