@@ -6,8 +6,8 @@ describe "ScatterPlot" do
  
   before(:all) do
     # The files for testing.
-    $dataFile = Dir.getwd + "/spec/dataFileTest.scatterplot"
-    $latexFile = Dir.getwd + "/spec/latexFileTest.tex"
+    $dataFile = Dir.getwd + "/spec/scatterPlotSpec.scatterplot"
+    $latexFile = Dir.getwd + "/spec/scatterPlotSpec.tex"
 
     # Create a data file for testing.
     CSV.open($dataFile, "w+", {:col_sep => "\t"}) do |file|

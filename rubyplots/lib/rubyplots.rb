@@ -1,6 +1,3 @@
-require 'rubyplots/scatterplot'
-
-
 require 'orchestrator'
 
 
@@ -13,26 +10,38 @@ class RubyPlots
 
   # data can be a file or directory
   def generatePlotsFor(data)
-    @orchestrator = Orchestrator.new
-
     dataPath = File.expand_path(data)
+    tempDir = createTempDirectoryIn dataPath
+    @orchestrator = Orchestrator.new(tempDir)
 
     if dataPath.file?
-      checkTypeAndGenerateFor dataPath
+      checkTypeAndGenerateForFile dataPath
     else
-      Dir.foreach(dataPath) do |file|
-        checkTypeAndGenerateFor file
-      end
+      checkTypeAndGenerateForDir dataPath
     end
+
     @orchestrator.generatePlots
+    #cleanup
   end
 
 
   private
 
-  def checkTypeAndGenerateFor(file)
+  def createTempDirectoryIn(dir)
+    newDir = dir + "/RubyPlotsWorkingDir"
+    Dir.mkdir(newDir)
+    return newDir
+  end
+
+  def checkTypeAndGenerateForFile(file)
     if isRightType?(file)
       @orchestrator.addLatexFor(file)
+    end
+  end
+
+  def checkTypeAndGenerateForDir(dir)
+    Dir.foreach(dir) do |file|
+      checkTypeAndGenerateFor file
     end
   end
 
