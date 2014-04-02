@@ -5,8 +5,8 @@
 # distribution of this software for license terms.
 # ------------------------------------------------
 
-require 'orchestrator'
-
+require_relative './rubyplots/orchestrator'
+require 'pry'
 
 class RubyPlots
 
@@ -18,13 +18,13 @@ class RubyPlots
   # data can be a file or directory
   def generatePlotsFor(data)
     dataPath = File.expand_path(data)
-    tempLatexDir = createTempDirectoryIn dataPath
+    tempLatexDir = createTempDirectoryFor dataPath
     @orchestrator = Orchestrator.new(tempLatexDir)
 
-    if dataPath.file?
-      checkTypeAndGenerateForFile dataPath
-    else
+    if File.directory? dataPath
       checkTypeAndGenerateForDir dataPath
+    else
+      checkTypeAndGenerateForFile dataPath
     end
 
     @orchestrator.generatePlots
@@ -34,8 +34,13 @@ class RubyPlots
 
   private
 
-  def createTempDirectoryIn(dir)
-    newDir = dir + "/RubyPlotsWorkingDir"
+  def createTempDirectoryFor(fileOrDir)
+    newDir = nil
+    if File.directory? fileOrDir
+      newDir = File.join(fileOrDir, 'RubyPlotsWorkingDir')
+    else
+      newDir = File.join(File.dirname(fileOrDir), 'RubyPlotsWorkingDir')
+    end
     Dir.mkdir(newDir)
     return newDir
   end
@@ -47,11 +52,14 @@ class RubyPlots
   end
 
   def checkTypeAndGenerateForDir(dir)
-    Dir.foreach(dir) do |file|
-      checkTypeAndGenerateFor file
+    Dir.entries(dir).each do |file|
+      # We loose the full path on .entries, so rejoin.
+      checkTypeAndGenerateForFile File.join(dir, file)
     end
   end
 
   def isRightType?(file)
-    return File.extension(file) == "scatterplot"
+    return File.extname(file) == ".scatterplot"
   end
+
+end

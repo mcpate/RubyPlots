@@ -10,8 +10,6 @@ require 'csv'
 class ScatterPlot
 
   def initialize(dataFile, latexFile)
-    assertExists latexFile
-    assertExists dataFile
     writeScatterPlot(dataFile, latexFile)
   end
 
@@ -35,10 +33,6 @@ class ScatterPlot
         file << '\\end{tikzpicture}' + "\n"
       end
     end
-  end
-
-  def assertExists(file)
-    unless File.exists? file then raise "File '#{file}' not found." end
   end
 
   def validateColumnNames(x, y)
