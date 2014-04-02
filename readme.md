@@ -1,6 +1,6 @@
 #RubyPlots
 
-RubyPlots is an opensource Ruby plotting tool for the generation of simple scatterplots favoring convention over configuration.
+RubyPlots is an opensource Ruby plotting tool for the generation of simple plots favoring convention over configuration.
 
 The main documentation for this project will be hosted at: [www.mcpate.github.io/RubyPlots]
 
