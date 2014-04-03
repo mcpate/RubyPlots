@@ -16,8 +16,9 @@ class ScatterPlot
   private
 
   # This reads the datafile in a way that requires a certain format.
-  # The title of this scatterplot is the name of the file (minus the extension).
+  # The title of this scatterplot becomes the name of the pdf file (minus the extension).
   # The first line of the file must be the names of the x and y columns.
+  # Multiple words for an x or y column must be enclosed in brackets (see validateColumnNames)
   def writeScatterPlot(dataFile, latexFile)
     CSV.open(dataFile, "r", {:col_sep => "\t"}) do |data|
       colNames = data.readline

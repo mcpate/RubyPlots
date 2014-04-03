@@ -17,7 +17,7 @@ class Orchestrator
   def initialize(tempLatexDirectory)
     validateLatexPackages
     @tempLatexDirectory = tempLatexDirectory
-    @latexFile = @tempLatexDirectory + "/" + "RubyPlotsLatexFile.tex"
+    @latexFile = File.join(@tempLatexDirectory, 'RubyPlotsLatexFile.tex')
     writeOpeningTo @latexFile
   end
 
@@ -31,8 +31,8 @@ class Orchestrator
   end
 
   def savePlotsAndCleanup(latexDir)
-    parentDir = File.split(latexDir)[0]
-    plotsToKeep = Dir.glob(latexDir + "/rubyplots-*.pdf")
+    parentDir = File.dirname(latexDir)
+    plotsToKeep = Dir.glob(latexDir + File::SEPARATOR + "rubyplots-*.pdf")
     plotsToKeep.each do |plot|
       FileUtils.move(plot, parentDir, {:force => true})  
     end

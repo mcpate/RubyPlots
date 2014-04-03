@@ -6,7 +6,7 @@
 # ------------------------------------------------
 
 require_relative './rubyplots/orchestrator'
-require 'pry'
+
 
 class RubyPlots
 
