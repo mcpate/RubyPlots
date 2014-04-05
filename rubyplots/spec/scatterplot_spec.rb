@@ -12,8 +12,8 @@ require 'csv'
 describe "ScatterPlot" do
  
   # The files for testing.
-  $dataFile = Dir.getwd + "/spec/scatterPlotSpec.scatterplot"
-  $latexFile = Dir.getwd + "/spec/scatterPlotSpec.tex"
+  $dataFile = File.join(Dir.getwd, "spec", "scatterPlotSpec.scatterplot")
+  $latexFile = File.join(Dir.getwd, "spec", "scatterPlotSpec.tex")
 
   before(:all) do
 
@@ -46,6 +46,5 @@ describe "ScatterPlot" do
     File.delete $dataFile
     File.delete $latexFile
   end
-
 
 end

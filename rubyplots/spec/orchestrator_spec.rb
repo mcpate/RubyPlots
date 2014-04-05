@@ -34,7 +34,7 @@ describe "Orchestrator" do
   it "should create a latex file" do
     o = Orchestrator.new($tempDir)
     o.addLatexFor $orchestratorDataFile
-    expect( Dir.glob($tempDir + "/*.tex").empty? ).to be_false
+    expect( Dir.glob(File.join($tempDir, "*.tex")).empty? ).to be_false
   end
 
   it "should create all latex related files in the temp directory" do
