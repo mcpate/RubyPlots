@@ -11,8 +11,8 @@ require 'fileutils'
 
 describe "Orchestrator" do
   
-  $tempDir = Dir.getwd + "/spec/OrchestratorSpecTempDir"
-  $orchestratorDataFile = $tempDir + "/orchestratorSpec.scatterplot"
+  $tempDir = File.join(Dir.getwd, "spec", "OrchestratorSpecTempDir")
+  $orchestratorDataFile = File.join($tempDir, "orchestratorSpec.scatterplot")
   $badExtensions = [".aux", ".log", ".syntex.gz"]
   
   before(:each) do
@@ -52,10 +52,9 @@ describe "Orchestrator" do
     expect( Dir.exists? $tempDir ).to be_false
     plot = Dir.glob(File.split($tempDir)[0] + "/*.pdf")
     expect( plot.empty? ).to be_false
-    #FileUtils.rm plot[0]
+    FileUtils.rm plot[0]
   end
 
-  # Delete the data file created for testing.
   after(:each) do
     FileUtils.rm_rf($tempDir)
   end

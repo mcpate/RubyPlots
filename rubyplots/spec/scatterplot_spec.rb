@@ -8,12 +8,14 @@
 require_relative '../lib/rubyplots/scatterplot'
 require 'csv'
 
+
 describe "ScatterPlot" do
  
+  # The files for testing.
+  $dataFile = Dir.getwd + "/spec/scatterPlotSpec.scatterplot"
+  $latexFile = Dir.getwd + "/spec/scatterPlotSpec.tex"
+
   before(:all) do
-    # The files for testing.
-    $dataFile = Dir.getwd + "/spec/scatterPlotSpec.scatterplot"
-    $latexFile = Dir.getwd + "/spec/scatterPlotSpec.tex"
 
     # Create a data file for testing.
     CSV.open($dataFile, "w+", {:col_sep => "\t"}) do |file|
@@ -28,11 +30,11 @@ describe "ScatterPlot" do
   end
 
   it "should raise an error if the latex file being passed in doesn't exist" do
-    expect{ ScatterPlot.new($dataFile, "DoesntExist") }.to raise_error
+    expect { ScatterPlot.new($dataFile, "DoesntExist") }.to raise_error
   end
 
   it "should raise an error if the data file being passed in doesn't exist" do
-    expect{ ScatterPlot.new("DoesntExist", $latexFile) }.to raise_error
+    expect { ScatterPlot.new("DoesntExist", $latexFile) }.to raise_error
   end
 
   it "should write the correct data to the latex file" do

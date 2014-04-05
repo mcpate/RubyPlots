@@ -59,7 +59,7 @@ class Orchestrator
 
   # Validates that latex, tikz, and pgfplots are installed
   def validateLatexPackages
-    if which("pdflatex").nil? or not system "kpsewhich tikz > /dev/null" or not system "kpsewhich pgfplots > /dev/null"
+    if which("pdflatex").nil? || !(system "kpsewhich tikz > /dev/null") || !(system "kpsewhich pgfplots > /dev/null")
       raise "Missing required latex packages."
     end
   end
