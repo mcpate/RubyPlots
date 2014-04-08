@@ -69,19 +69,17 @@ There are several requirements for RubyPlots to work on your data.<br>
   </li>
 </ol>
 Once the above requirements are met it is as simple as the following in an IRB session:
-</p>
-<!--        
-        <p>There are several things that need to happen for RubyPlots to work. The first thing is that you need to give any datafile that you would like to have a plot generated for the extension of '.scatterplot'.  This alerts RubyPlots Orchestrator to the fact that this is a file of interest.  The second thing is that the file needs to be written in tab delimited format with the very first row in the file consisting of the name for the x column, followed by the name for the y column.  The rest of the rows should be the data (again, tab delimited format).</p>
 
-
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<pre><code>
+$ require 'rubyplots'
+$ plotter = RubyPlots.new
+$ plotter.generatePlotsFor "./"
 </code></pre>
 
+Note that './' represents the directory containing the data files.  This will generate a pdf file with the same name as your data file, prefixed with 'rubyplots-'.
+</p>
 
-
+<!--
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
