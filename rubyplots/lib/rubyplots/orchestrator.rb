@@ -53,8 +53,9 @@ class Orchestrator
   end
 
   # A requirement of generating individual PDF's
+  # Todo: Figure out why you get 2 errors here that don't seem to effect compilation...
   def enableLatexSystemCallsFor(latex)
-    system "pdflatex -shell-escape #{File.basename(latex, ".tex")}"
+    system "pdflatex -shell-escape #{File.basename(latex, ".tex")} > /dev/null"
   end
 
   # Validates that latex, tikz, and pgfplots are installed
