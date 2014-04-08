@@ -17,7 +17,7 @@ describe "ScatterPlot" do
 
   before(:all) do
 
-    # Create a data file for testing.
+    # Create a data in the spec directory file for testing.
     CSV.open($dataFile, "w+", {:col_sep => "\t"}) do |file|
       file << ["x", "y"]
       file << [10, 20]
@@ -25,7 +25,7 @@ describe "ScatterPlot" do
       file << [30, 80]
     end
     
-    # Create an empty latex file for testing.
+    # Create an empty latex file in the spec directory for testing.
     File.open($latexFile, "w") { |file| file.truncate(0) }
   end
 
@@ -37,6 +37,8 @@ describe "ScatterPlot" do
     expect { ScatterPlot.new("DoesntExist", $latexFile) }.to raise_error
   end
 
+  # A breakpoint is usually set here and the data is visually inspected.
+  # Todo: This should be automated better once plot types are decided upon. 
   it "should write the correct data to the latex file" do
     ScatterPlot.new($dataFile, $latexFile)
   end

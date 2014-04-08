@@ -9,11 +9,12 @@ require_relative '../lib/rubyplots/orchestrator'
 require 'csv'
 require 'fileutils'
 
+
 describe "Orchestrator" do
   
   $tempDir = File.join(Dir.getwd, "spec", "OrchestratorSpecTempDir")
   $orchestratorDataFile = File.join($tempDir, "orchestratorSpec.scatterplot")
-  $badExtensions = [".aux", ".log", ".syntex.gz"]
+  $badExtensions = [".aux", ".log", ".syntex.gz", ".tex", ".dpth", ".auxlock", ".toc"]
   
   before(:each) do
     Dir.mkdir $tempDir
@@ -37,10 +38,15 @@ describe "Orchestrator" do
     expect( Dir.glob(File.join($tempDir, "*.tex")).empty? ).to be_false
   end
 
-  it "should create all latex related files in the temp directory" do
+  it "should not create files in the parent directory" do
     o = Orchestrator.new $tempDir
     o.addLatexFor $orchestratorDataFile
     o.generatePlots
+    # Look in spec and make sure no 'badExtensions' files were created here.
+    $badExtensions.each do |ext|
+      badFiles = Dir.glob( File.join( File.dirname($tempDir), ('*' + ext) ) )
+      expect( badFiles.empty? ).to be_true
+    end
   end
 
   it "should generate pdf plots and leave no cruft behind" do
@@ -50,9 +56,9 @@ describe "Orchestrator" do
     o.savePlotsAndCleanup $tempDir
     
     expect( Dir.exists? $tempDir ).to be_false
-    plot = Dir.glob(File.split($tempDir)[0] + "/*.pdf")
-    expect( plot.empty? ).to be_false
-    FileUtils.rm plot[0]
+    existingPlots = Dir.glob(File.join(File.dirname($tempDir), "*.pdf"))
+    expect( existingPlots.empty? ).to be_false
+    FileUtils.rm existingPlots[0]
   end
 
   after(:each) do
