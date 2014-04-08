@@ -11,14 +11,16 @@ require_relative './rubyplots/orchestrator'
 class RubyPlots
 
   @orchestrator = nil
+  @filesFound = 0
 
   def initialize
   end
 
   # data can be a file or directory
   def generatePlotsFor(data)
-    dataPath = File.expand_path(data)
+    dataPath = File.absolute_path(data)
     tempLatexDir = createTempDirectoryFor dataPath
+    puts "RubyPlots: created temporary working directory '#{tempLatexDir}'."
     @orchestrator = Orchestrator.new(tempLatexDir)
 
     if File.directory? dataPath
@@ -29,6 +31,7 @@ class RubyPlots
 
     @orchestrator.generatePlots
     @orchestrator.savePlotsAndCleanup tempLatexDir
+    return {:filesFound => @filesFound}
   end
 
 
@@ -47,6 +50,7 @@ class RubyPlots
 
   def checkTypeAndGenerateForFile(file)
     if isRightType?(file)
+      @filesFound += 1
       @orchestrator.addLatexFor(file)
     end
   end

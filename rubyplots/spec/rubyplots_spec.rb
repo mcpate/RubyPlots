@@ -12,7 +12,7 @@ require 'fileutils'
 
 describe 'RubyPlots' do
   
-  $tempDir = File.join(Dir.getwd, 'spec', 'OrchestratorSpecTempDir')
+  $tempDir = File.absolute_path( File.join('.', 'spec', 'OrchestratorSpecTempDir') )
 
   before(:all) do
     Dir.mkdir $tempDir

@@ -43,6 +43,7 @@ class ScatterPlot
         file << '\\end{tikzpicture}' + "\n"
       end
     end
+    puts "RubyPlots: added latex for '#{dataFile}'."
   end
 
   def validateColumnNames(x, y)
