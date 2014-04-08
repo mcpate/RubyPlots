@@ -40,7 +40,14 @@ The idea is that for straightforward data-to-graphic visualizations, prerequisit
 The engine driving the visualizations is PdfLatex + PdfPlots.  Ruby plots basically takes your data and writes some latex around it, compiles the latex and extracts the graphs.  And of course, like all good utilities, RubyPlots cleans up after itself removing all latex related cruft and leaving pdf's of your data (one for each data file).<br><br>
 Right now RubyPlots is in its infancy and is therefore functionality limited but, as all infants do, it is growing.  Help is welcome in the growth of this project and therefore feel free to issue a pull request. Contributions are always welcome and much appreciated.
 </p>
-        
+
+<h3><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Installation</h3>
+<p>
+<pre><code>
+$ gem install rubyplots
+</code></pre>
+</p>
+
 <h3>
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>License</h3>
 
@@ -69,7 +76,6 @@ There are several requirements for RubyPlots to work on your data.<br>
   </li>
 </ol>
 Once the above requirements are met it is as simple as the following in an IRB session:
-
 <pre><code>
 $ require 'rubyplots'
 $ plotter = RubyPlots.new
