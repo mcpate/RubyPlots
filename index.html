@@ -34,10 +34,12 @@
         <h3>
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>About</h3>
 
-<p>RubyPlots is a PgfPlots (Latex) wrapper for Ruby that is all about generating stupid simple plots from data files.<br><br>
-The idea is that for straightforward data-to-graphic visualizations, prerequisits should be kept to a minimum and ease of use to a maximum.<br>
-The engine driving the visualizations is PdfLatex + PdfPlots.  Ruby plots basically takes your data and writes some latex around it, compiles the latex and extracts the graphs.  And of course, like all good utilities, RubyPlots cleans up after itself removing all latex related cruft and leaving pdf's of your data (one for each data file).<br>
-Right now RubyPlots is in its infancy and is therefore functionality limited but, as all infants do, it is growing.  Help is welcome in the growth of this project and therefore feel free to issue a pull request. Contributions are always welcome and much appreciated.</p>
+<p>
+RubyPlots is a PgfPlots (Latex) wrapper for Ruby that is all about generating stupid simple plots from data files.<br><br>
+The idea is that for straightforward data-to-graphic visualizations, prerequisits should be kept to a minimum and ease of use to a maximum.<br><br>
+The engine driving the visualizations is PdfLatex + PdfPlots.  Ruby plots basically takes your data and writes some latex around it, compiles the latex and extracts the graphs.  And of course, like all good utilities, RubyPlots cleans up after itself removing all latex related cruft and leaving pdf's of your data (one for each data file).<br><br>
+Right now RubyPlots is in its infancy and is therefore functionality limited but, as all infants do, it is growing.  Help is welcome in the growth of this project and therefore feel free to issue a pull request. Contributions are always welcome and much appreciated.
+</p>
         
 <h3>
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>License</h3>
@@ -54,7 +56,19 @@ Right now RubyPlots is in its infancy and is therefore functionality limited but
         
 <p>
 There are several requirements for RubyPlots to work on your data.<br>
-
+<ol>
+  <li>You must have the following installed: PdfLatex with the Tikz and PfgPlots packages.</li>
+  <li>You must save any files you want data generated for with the extension '.scatterplot'</li>
+  <li>You must save the data in tab seperated format obeying the following:
+      <ul>
+        <li>The first row of the file represents the column names (x and y columns). </li>
+        <li>Each column name will be displayed on the plot as 'axis labels' so name your columns accordingly.</li>
+        <li>Columns with multiple word names should be encolsed in brackets '{' '}'</li>
+        <li>Each 'point' on the plot should be represented by one row in the data file.</li>
+      </ul>
+  </li>
+</ol>
+Once the above requirements are met it is as simple as the following in an IRB session:
 </p>
 <!--        
         <p>There are several things that need to happen for RubyPlots to work. The first thing is that you need to give any datafile that you would like to have a plot generated for the extension of '.scatterplot'.  This alerts RubyPlots Orchestrator to the fact that this is a file of interest.  The second thing is that the file needs to be written in tab delimited format with the very first row in the file consisting of the name for the x column, followed by the name for the y column.  The rest of the rows should be the data (again, tab delimited format).</p>
