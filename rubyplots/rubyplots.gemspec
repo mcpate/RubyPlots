@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = "rubyplots"
-  s.version = "0.0.1"
-  s.date = "2014-04-06"
+  s.version = "0.0.2"
+  s.date = "2014-04-26"
   s.summary = "RubyPlots - An open source plotting utility for Ruby!"
   s.description = "RubyPlots can be set loose on a directory of datafiles or a singluar datafile.  It uses the file extension to determine a datafile of interest and, using the Latex PgfPlots library, creates a single pdf plot for each data file.  See the Homepage for questions.  Enjoy!"
   s.author = ["Matthew Pate"]
