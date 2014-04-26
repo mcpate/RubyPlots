@@ -10,8 +10,8 @@ require_relative './rubyplots/orchestrator'
 
 class RubyPlots
 
-  @orchestrator = nil
-  @filesFound = 0
+  @orchestrator
+  @filesFound
 
   def initialize
   end
@@ -22,6 +22,7 @@ class RubyPlots
     tempLatexDir = createTempDirectoryFor dataPath
     puts "RubyPlots: created temporary working directory '#{tempLatexDir}'."
     @orchestrator = Orchestrator.new(tempLatexDir)
+    @filesFound = 0
 
     if File.directory? dataPath
       checkTypeAndGenerateForDir dataPath

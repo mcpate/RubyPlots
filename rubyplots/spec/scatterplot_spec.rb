@@ -5,6 +5,7 @@
 # distribution of this software for license terms.
 # ------------------------------------------------
 
+require_relative './spec_helper.rb'
 require_relative '../lib/rubyplots/scatterplot'
 require 'csv'
 

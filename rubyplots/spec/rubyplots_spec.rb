@@ -5,6 +5,7 @@
 # distribution of this software for license terms.
 # ------------------------------------------------
 
+require_relative './spec_helper.rb'
 require_relative '../lib/rubyplots.rb'
 require 'csv'
 require 'fileutils'
@@ -55,7 +56,7 @@ describe 'RubyPlots' do
 
   it 'should generate 3 pdfs for 3 data files' do
     rp = RubyPlots.new()
-    expect{ rp.generatePlotsFor $tempDir }.to_not raise_error
+    rp.generatePlotsFor $tempDir
     pdfs = Dir.glob(File.join($tempDir, '*.pdf'))
     expect( pdfs.empty? ).to be_false
     expect( pdfs.count ).to eq(3)
